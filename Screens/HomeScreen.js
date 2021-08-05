@@ -1,12 +1,83 @@
 import { useTheme } from '@react-navigation/native';
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, StatusBar, ScrollView, SafeAreaView, SectionList, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
-import ImageOverlay from "react-native-image-overlay";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ListItemElement, ImageElement } from 'react-native-elements';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../src/actions/ProductAction';
+
+
 
 const HomeScreen = ({ item }) => {
     const theme = useTheme();
+
+    const [data, setData] = useState({});
+
+    const [product, setProduct] = useState('');
+    const dispatch = useDispatch();
+    const submitProduct = (product, image) => dispatch(addProduct(product, image))
+
+    useEffect(() => {
+        axios.get("http://www.omdbapi.com/?apikey=621a32e6&s=Batman")
+            .then(function (response) {
+                setData(response.data);
+                console.warn(data)
+            }).catch(function (error) {
+                console.log(error);
+            })
+    }, []);
+
+    if (!data) {
+        return null
+    }
+
+    const ListItem = ({ item }) => {
+        return (
+            <View style={styles.item}>
+                <View style={styles.imgBackground}>
+                    <Image
+                        source={{
+                            uri: item.uri,
+                        }}
+                        style={styles.itemPhoto1}
+                        resizeMode="cover"
+                    >
+                    </Image>
+                    <View style={styles.circle}>
+                        <TouchableOpacity
+                            onPress={() => { }}
+                        >
+                            <Icon
+                                name="heart-outline"
+                                color="#333"
+                                size={25}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.addCircle}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                console.warn("title: " + item.text)
+                                submitProduct(item.text, item.uri)
+                                setProduct('')
+                            }}
+                        >
+                            <Icon
+                                name="add-circle-outline"
+                                color="#FF5733"
+                                size={30}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <Text style={styles.itemText}>{item.text}</Text>
+                <Text style={styles.itemText}>{item.price}</Text>
+            </View>
+        );
+    };
+
     return (
         <ScrollView style={styles.container}>
             <StatusBar barStyle={theme.dark ? 'light-content' : 'dark-content'} />
@@ -92,16 +163,77 @@ const HomeScreen = ({ item }) => {
             </View>
 
             <View style={styles.bannerContainer}>
-            <View style={styles.slide}>
-                <Image
-                    source={{
-                        uri:"https://i.pinimg.com/originals/8c/98/cb/8c98cba63fdb33e5e9fbe68dd0855995.jpg"
-                    }}
-                    resizeMode='contain'
-                    style={styles.slideImage} />
-            </View>
+                <View style={styles.slide}>
+                    <Image
+                        source={{
+                            uri: "https://i.pinimg.com/originals/8c/98/cb/8c98cba63fdb33e5e9fbe68dd0855995.jpg"
+                        }}
+                        resizeMode='contain'
+                        style={styles.slideImage} />
+                </View>
             </View>
 
+            <View style={styles.container}>
+                <StatusBar style="light" />
+                <Text style={styles.sectionHeader}>Superhero Costume</Text>
+                <SafeAreaView style={{ flex: 1 }}>
+                    <FlatList
+                        horizontal
+                        data={data.Search}
+                        // renderItem={({ item }) => <ListItem item={item} />}
+                        renderItem={({ item }) => {
+                            return (
+                                <View style={styles.item}>
+                                    <View style={styles.imgBackground}>
+                                        <Image
+                                            source={{
+                                                uri: item.Poster,
+                                            }}
+                                            style={styles.itemPhoto1}
+                                            resizeMode="cover"
+                                            onPress={() => {
+                                                // this.props.add(item.Title)
+                                            }}
+                                        >
+                                        </Image>
+                                        <View style={styles.circle}>
+                                            <TouchableOpacity
+                                                onPress={() => {
+
+                                                }}
+                                            >
+                                                <Icon
+                                                    name="heart-outline"
+                                                    color="#333"
+                                                    size={25}
+                                                />
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={styles.addCircle}>
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    console.warn("title: " + item.Title)
+                                                    submitProduct(item.Title, item.Poster)
+                                                    setProduct('')
+                                                }}
+                                            >
+                                                <Icon
+                                                    name="add-circle-outline"
+                                                    color="#FF5733"
+                                                    size={30}                                                    
+                                                />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                    <Text style={styles.itemText}>{item.Year}</Text>
+                                    <Text style={styles.itemText} numberOfLines={1}>{item.Title}</Text>
+                                </View>
+                            )
+                        }}
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </SafeAreaView>
+            </View>
 
             <View style={styles.container}>
                 <StatusBar style="light" />
@@ -130,14 +262,14 @@ const HomeScreen = ({ item }) => {
             </View>
 
             <View style={styles.bannerContainer}>
-            <View style={styles.slide}>
-                <Image
-                    source={{
-                        uri:"https://social.fbbonline.in/assets/fbb_indias_fashion_hub_indias_fashion_hub_fashion_clothing_store_online_shopping_store_india_women_banner.jpg?version=2.2.11&subv=1"
-                    }}
-                    resizeMode='contain'
-                    style={styles.slideImage} />
-            </View>
+                <View style={styles.slide}>
+                    <Image
+                        source={{
+                            uri: "https://social.fbbonline.in/assets/fbb_indias_fashion_hub_indias_fashion_hub_fashion_clothing_store_online_shopping_store_india_women_banner.jpg?version=2.2.11&subv=1"
+                        }}
+                        resizeMode='contain'
+                        style={styles.slideImage} />
+                </View>
             </View>
 
             <View style={styles.container}>
@@ -169,35 +301,7 @@ const HomeScreen = ({ item }) => {
 };
 
 
-const ListItem = ({ item }) => {
-    return (
-        <View style={styles.item}>
-            <View style={styles.imgBackground}>
-                <Image
-                    source={{
-                        uri: item.uri,
-                    }}
-                    style={styles.itemPhoto1}
-                    resizeMode="cover"
-                >
-                </Image>
-                <View style={styles.circle}>
-                    <TouchableOpacity
-                        onPress={() => { }}
-                    >
-                        <Icon
-                            name="heart-outline"
-                            color="#333"
-                            size={25}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <Text style={styles.itemText}>{item.text}</Text>
-            <Text style={styles.itemText}>{item.price}</Text>
-        </View>
-    );
-};
+
 
 const ListItem_2 = ({ item }) => {
     return (
@@ -216,7 +320,20 @@ const ListItem_2 = ({ item }) => {
     );
 };
 
+// const mapStateToProps = (state) => {
+//     console.log(state);
+//     return {
+//         products: state.productReducer.productList
+//     }
+// }
 
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         add: (product) => dispatch(addProduct(product))
+//     }
+// }
+
+// export default connect (mapStateToProps,mapDispatchToProps)(HomeScreen);
 
 export default HomeScreen;
 
@@ -237,7 +354,7 @@ const styles = StyleSheet.create({
     bannerContainer: {
         height: 200,
         width: '100%',
-        padding:5,
+        padding: 5,
         alignSelf: 'center',
         borderRadius: 0,
     },
@@ -381,6 +498,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     itemText: {
+        width: 150,
         color: '#333',
         marginTop: 10,
         marginStart: 5,
@@ -406,16 +524,29 @@ const styles = StyleSheet.create({
 
     },
     circle: {
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
         borderRadius: 50,
         position: 'absolute',
-        top: 10,
-        right: 10,
+        top: 8,
+        right: 8,
         elevation: 10,
         backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    addCircle: {
+        height: 40,
+        width: 40,
+        borderRadius: 50,
+        position: 'absolute',
+        elevation: 10,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bottom: 8,
+        right: 60,
+        paddingLeft:2
     },
     cardsWrapperList2: {
         width: 150,

@@ -10,6 +10,19 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import Providers from './navigation';
 
+import configureStore from './src/Store';
+import { Provider } from 'react-redux';
+
+// const App = () => {
+//   return (
+//     <Providers />
+//   );
+// };
+// export default App;
+
+
+
+const store = configureStore;
 const App = () => {
   return (
     <Providers />
