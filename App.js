@@ -7,23 +7,17 @@
  */
 
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Providers from './navigation';
+import { requestUserPermission, notificationListner } from './utils/notificationService';
 
-import configureStore from './src/Store';
-import { Provider } from 'react-redux';
-
-// const App = () => {
-//   return (
-//     <Providers />
-//   );
-// };
-// export default App;
-
-
-
-const store = configureStore;
 const App = () => {
+
+  useEffect(() => {
+    requestUserPermission()
+    notificationListner()
+  })
+
   return (
     <Providers />
   );
