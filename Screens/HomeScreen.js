@@ -23,7 +23,7 @@ const HomeScreen = ({ item }) => {
         axios.get("http://www.omdbapi.com/?apikey=621a32e6&s=Batman")
             .then(function (response) {
                 setData(response.data);
-                console.warn(data)
+                // console.warn(data)
             }).catch(function (error) {
                 console.log(error);
             })
@@ -59,7 +59,8 @@ const HomeScreen = ({ item }) => {
                     <View style={styles.addCircle}>
                         <TouchableOpacity
                             onPress={() => {
-                                console.warn("title: " + item.text)
+                                // console.warn("title: " + item.text)
+                                alert("Product added successfully.")
                                 submitProduct(item.text, item.uri)
                                 setProduct('')
                             }}
@@ -180,6 +181,7 @@ const HomeScreen = ({ item }) => {
                     <FlatList
                         horizontal
                         data={data.Search}
+                        keyExtractor={(item, index) => item.imdbID.toString()}
                         // renderItem={({ item }) => <ListItem item={item} />}
                         renderItem={({ item }) => {
                             return (
@@ -212,7 +214,8 @@ const HomeScreen = ({ item }) => {
                                         <View style={styles.addCircle}>
                                             <TouchableOpacity
                                                 onPress={() => {
-                                                    console.warn("title: " + item.Title)
+                                                    // console.warn("title: " + item.Title)
+                                                    alert("Product added successfully.")
                                                     submitProduct(item.Title, item.Poster)
                                                     setProduct('')
                                                 }}
@@ -230,7 +233,7 @@ const HomeScreen = ({ item }) => {
                                 </View>
                             )
                         }}
-                        showsHorizontalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}                        
                     />
                 </SafeAreaView>
             </View>
@@ -250,6 +253,7 @@ const HomeScreen = ({ item }) => {
                                     data={section.data}
                                     renderItem={({ item }) => <ListItem item={item} />}
                                     showsHorizontalScrollIndicator={false}
+                                    keyExtractor={(item, index) => item.key.toString()}
                                 />
                             </View>
                         )}
@@ -286,6 +290,7 @@ const HomeScreen = ({ item }) => {
                                     data={section.data}
                                     renderItem={({ item }) => <ListItem_2 item={item} />}
                                     showsHorizontalScrollIndicator={false}
+                                    keyExtractor={(item, index) => item.key.toString()}
                                 />
                             </View>
                         )}

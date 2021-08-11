@@ -11,6 +11,7 @@ import { View } from 'react-native';
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const MyBagStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTabScreen = () => {
@@ -62,7 +63,7 @@ const MainTabScreen = () => {
       />
       <Tab.Screen
         name="MyBag"
-        component={MyBagScreen}
+        component={MyBagStackScreen}
         options={{
           tabBarLabel: 'Cart',
           tabBarIcon: ({ color }) => (
@@ -148,4 +149,25 @@ const PrifleStackScreen = ({ navigation }) => (
       }}
     />
   </ProfileStack.Navigator>
+);
+
+const MyBagStackScreen = ({ navigation }) => (
+  <MyBagStack.Navigator>
+    <MyBagStack.Screen
+      name='Cart'
+      component={MyBagScreen}
+      options={{
+        headerLeft: () => (
+          <Icon
+            style={{ paddingLeft: 10 }}
+            name="md-menu"
+            size={25}
+            backgroundColor="#fff"
+            background="#000"
+            onPress={() => navigation.openDrawer()}
+          ></Icon>
+        )
+      }}
+    />
+  </MyBagStack.Navigator>
 );

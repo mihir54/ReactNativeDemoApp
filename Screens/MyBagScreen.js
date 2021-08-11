@@ -7,7 +7,7 @@ import { deleteProduct } from '../src/actions/ProductAction';
 const MyBagScreen = () => {
     const dispatch = useDispatch();
     const deleteCartProduct = (key) => dispatch(deleteProduct(key));
-    const products = useSelector(state => state.productReducer.productList);
+    const products = useSelector(state => state.product_Reducer.productList);
 
     const renderItem = ({ item }) => (
         <View style={styles.item}>
@@ -35,11 +35,10 @@ const MyBagScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>Cart Items</Text>
             <FlatList
                 data={products}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => item.key}
+                keyExtractor={(item, index) => item.key.toString()}
             />
         </View>
     );
@@ -51,15 +50,15 @@ const styles = StyleSheet.create({
         padding: 16
     },
     listText: {
-        fontSize: 20,
+        fontSize: 15,
         width: "50%",
         margin: 10,
         alignSelf: 'center'
     },
     container: {
-        marginTop: 30,
+        marginTop: 10,
         padding: 2,
-        marginBottom: 30,
+        marginBottom: 10,
     },
     item: {
         margin: 10,
