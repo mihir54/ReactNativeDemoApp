@@ -2,6 +2,7 @@ import React, { createContext, useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
+import { Alert } from 'react-native';
 
 export const AuthContext = createContext();
 
@@ -14,9 +15,13 @@ export const AuthProvider = ({ children }) => {
                 setUser,
                 login: async (email, password) => {
                     try {
-                        await auth().signInWithEmailAndPassword(email, password);
+                        if (email.trim().length != 0 && password.length != 0)
+                            await auth().signInWithEmailAndPassword(email, password);
+                        else
+                            alert("Please enter email and password.")
                     } catch (e) {
                         console.log(e);
+                        alert("Invalid User! \nPlease check email id and password.")
                     }
                 },
                 googleLogin: async () => {
@@ -58,9 +63,16 @@ export const AuthProvider = ({ children }) => {
                         console.log(error);
                     }
                 },
-                register: async (email, password) => {
+                register: async (email, password, confirmPassword) => {
                     try {
-                        await auth().createUserWithEmailAndPassword(email, password);
+                        if (email.trim().length != 0 && password.length != 0) {
+                            if (password == confirmPassword)
+                                await auth().createUserWithEmailAndPassword(email, password);
+                            else
+                                alert("Password is not match.")
+                        } else {
+                            alert("Please fill the form.")
+                        }
                     } catch (e) {
                         console.log(e);
                     }
@@ -74,7 +86,7 @@ export const AuthProvider = ({ children }) => {
                 }
             }}>
             {children}
-        </AuthContext.Provider>
+        </AuthContext.Provider >
 
     );
 };

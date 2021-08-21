@@ -12,8 +12,7 @@ import { Provider } from 'react-redux';
 const Drawer = createDrawerNavigator()
 const { store, persistor } = reduxStore();
 
-const AppStack = () => {
-    
+const AppStack = () => {    
     return (
         <Provider store={store}>
              <PersistGate loading={null} persistor={persistor}>

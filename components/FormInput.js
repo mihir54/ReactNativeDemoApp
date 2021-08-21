@@ -1,9 +1,11 @@
 import React from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
+import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { windowWidth, windowHeight } from '../utils/Dimension';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
 
-const FormInput = ({ labelValue, placeHolderText, iconType, ...rest }) => {
+const FormInput = ({ labelValue, placeHolderText, iconType, validationIcon, validationIconColor,
+    checkTextInputchange, ...rest }) => {
     return (
         <View style={styles.inputContainer}>
             <View style={styles.iconStyle}>
@@ -17,6 +19,13 @@ const FormInput = ({ labelValue, placeHolderText, iconType, ...rest }) => {
                 placeholderTextColor="#666"
                 {...rest}
             />
+            {checkTextInputchange ?
+                <View style={styles.iconStyle}>
+                    <TouchableOpacity {...rest}>
+                        <Feather name={validationIcon} size={20} color={validationIconColor} />
+                    </TouchableOpacity>
+                </View> : null}
+
         </View>
     );
 };
@@ -33,7 +42,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 3,
         flexDirection: 'row',
-        backgroundColor:'#fff'
+        backgroundColor: '#fff'
     },
     iconStyle: {
         padding: 10,

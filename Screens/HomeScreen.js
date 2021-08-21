@@ -79,6 +79,57 @@ const HomeScreen = ({ item }) => {
         );
     };
 
+    const ListItem_3 = ({ item }) => {
+        return (
+            <View style={styles.item}>
+                <View style={styles.imgBackground}>
+                    <Image
+                        source={{
+                            uri: item.Poster,
+                        }}
+                        style={styles.itemPhoto1}
+                        resizeMode="cover"
+                        onPress={() => {
+                            // this.props.add(item.Title)
+                        }}
+                    >
+                    </Image>
+                    <View style={styles.circle}>
+                        <TouchableOpacity
+                            onPress={() => {
+
+                            }}
+                        >
+                            <Icon
+                                name="heart-outline"
+                                color="#333"
+                                size={25}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.addCircle}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                // console.warn("title: " + item.Title)
+                                alert("Product added successfully.")
+                                submitProduct(item.Title, item.Poster)
+                                setProduct('')
+                            }}
+                        >
+                            <Icon
+                                name="add-circle-outline"
+                                color="#FF5733"
+                                size={30}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <Text style={styles.itemText}>{item.Year}</Text>
+                <Text style={styles.itemText} numberOfLines={1}>{item.Title}</Text>
+            </View>
+        )
+    }
+
     return (
         <ScrollView style={styles.container}>
             <StatusBar barStyle={theme.dark ? 'light-content' : 'dark-content'} />
@@ -182,58 +233,8 @@ const HomeScreen = ({ item }) => {
                         horizontal
                         data={data.Search}
                         keyExtractor={(item, index) => item.imdbID.toString()}
-                        // renderItem={({ item }) => <ListItem item={item} />}
-                        renderItem={({ item }) => {
-                            return (
-                                <View style={styles.item}>
-                                    <View style={styles.imgBackground}>
-                                        <Image
-                                            source={{
-                                                uri: item.Poster,
-                                            }}
-                                            style={styles.itemPhoto1}
-                                            resizeMode="cover"
-                                            onPress={() => {
-                                                // this.props.add(item.Title)
-                                            }}
-                                        >
-                                        </Image>
-                                        <View style={styles.circle}>
-                                            <TouchableOpacity
-                                                onPress={() => {
-
-                                                }}
-                                            >
-                                                <Icon
-                                                    name="heart-outline"
-                                                    color="#333"
-                                                    size={25}
-                                                />
-                                            </TouchableOpacity>
-                                        </View>
-                                        <View style={styles.addCircle}>
-                                            <TouchableOpacity
-                                                onPress={() => {
-                                                    // console.warn("title: " + item.Title)
-                                                    alert("Product added successfully.")
-                                                    submitProduct(item.Title, item.Poster)
-                                                    setProduct('')
-                                                }}
-                                            >
-                                                <Icon
-                                                    name="add-circle-outline"
-                                                    color="#FF5733"
-                                                    size={30}                                                    
-                                                />
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                    <Text style={styles.itemText}>{item.Year}</Text>
-                                    <Text style={styles.itemText} numberOfLines={1}>{item.Title}</Text>
-                                </View>
-                            )
-                        }}
-                        showsHorizontalScrollIndicator={false}                        
+                        renderItem={({ item }) => <ListItem_3 item={item} />}
+                        showsHorizontalScrollIndicator={false}
                     />
                 </SafeAreaView>
             </View>
@@ -241,26 +242,13 @@ const HomeScreen = ({ item }) => {
             <View style={styles.container}>
                 <StatusBar style="light" />
                 <SafeAreaView style={{ flex: 1 }}>
-                    <SectionList
-                        contentContainerStyle={{ paddingHorizontal: 10 }}
-                        stickySectionHeadersEnabled={false}
-                        sections={SECTIONS}
-                        renderSectionHeader={({ section }) => (
-                            <View>
-                                <Text style={styles.sectionHeader}>{section.title}</Text>
-                                <FlatList
-                                    horizontal
-                                    data={section.data}
-                                    renderItem={({ item }) => <ListItem item={item} />}
-                                    showsHorizontalScrollIndicator={false}
-                                    keyExtractor={(item, index) => item.key.toString()}
-                                />
-                            </View>
-                        )}
-                        renderItem={({ item, section }) => {
-                            return null;
-                            // return <ListItem item={item} />;
-                        }}
+                    <Text style={styles.sectionHeader}>{SECTIONS[0].title}</Text>
+                    <FlatList
+                        horizontal
+                        data={SECTIONS[0].data}
+                        keyExtractor={(item, index) => item.key.toString()}
+                        renderItem={({ item }) => <ListItem item={item} />}
+                        showsHorizontalScrollIndicator={false}
                     />
                 </SafeAreaView>
             </View>
@@ -278,26 +266,13 @@ const HomeScreen = ({ item }) => {
 
             <View style={styles.container}>
                 <SafeAreaView style={{ flex: 1 }}>
-                    <SectionList
-                        contentContainerStyle={{ paddingHorizontal: 10 }}
-                        stickySectionHeadersEnabled={false}
-                        sections={SECTIONS_2}
-                        renderSectionHeader={({ section }) => (
-                            <View>
-                                <Text style={styles.sectionHeader}>{section.title}</Text>
-                                <FlatList
-                                    horizontal
-                                    data={section.data}
-                                    renderItem={({ item }) => <ListItem_2 item={item} />}
-                                    showsHorizontalScrollIndicator={false}
-                                    keyExtractor={(item, index) => item.key.toString()}
-                                />
-                            </View>
-                        )}
-                        renderItem={({ item, section }) => {
-                            return null;
-                            // return <ListItem item={item} />;
-                        }}
+                    <Text style={styles.sectionHeader}>{SECTIONS_2[0].title}</Text>
+                    <FlatList
+                        horizontal
+                        data={SECTIONS_2[0].data}
+                        renderItem={({ item }) => <ListItem_2 item={item} />}
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => item.key.toString()}
                     />
                 </SafeAreaView>
             </View>
@@ -551,7 +526,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         bottom: 8,
         right: 60,
-        paddingLeft:2
+        paddingLeft: 2
     },
     cardsWrapperList2: {
         width: 150,
