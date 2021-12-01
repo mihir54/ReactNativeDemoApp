@@ -7,6 +7,7 @@ import SignUpScreen from '../Screens/SignUpScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import CheckoutScreen from '../Screens/CheckoutScreen';
 
 const Stack = createStackNavigator();
 

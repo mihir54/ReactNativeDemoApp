@@ -8,6 +8,7 @@ import MyBagScreen from './MyBagScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import StoreLocaterScreen from './StoreLocaterScreen';
 import { View } from 'react-native';
+import CheckoutScreen from './CheckoutScreen';
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -82,8 +83,8 @@ const HomeStackScreen = ({ navigation }) => (
     screenOptions={{
       headerStyle: {
         backgroundColor: '#fff',
-        shadowColor:'#fff',
-        elevation:0
+        shadowColor: '#fff',
+        elevation: 0
       },
       headerTintColor: '#333',
       headerTitleStyle: {
@@ -92,9 +93,9 @@ const HomeStackScreen = ({ navigation }) => (
     }}>
     <HomeStack.Screen
       name='Home'
-      component={HomeScreen}      
+      component={HomeScreen}
       options={{
-        title:'Home',
+        title: 'Home',
         headerLeft: () => (
           <View style={{ marginLeft: 10 }}>
             <Icon
@@ -116,7 +117,7 @@ const HomeStackScreen = ({ navigation }) => (
               backgroundColor="#fff"
               onPress={() => { }}
             ></Icon>
-             <Icon
+            <Icon
               style={{ paddingRight: 10 }}
               name="search-outline"
               size={25}
@@ -125,7 +126,7 @@ const HomeStackScreen = ({ navigation }) => (
               onPress={() => { }}
             ></Icon>
           </View>
-        )        
+        )
       }} />
   </HomeStack.Navigator>
 );
@@ -168,6 +169,11 @@ const MyBagStackScreen = ({ navigation }) => (
           ></Icon>
         )
       }}
+    />
+    <MyBagStack.Screen
+      name="checkout"
+      component={CheckoutScreen}
+      options={{ header: () => null }}
     />
   </MyBagStack.Navigator>
 );

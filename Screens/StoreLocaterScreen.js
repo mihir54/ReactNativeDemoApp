@@ -225,18 +225,42 @@ const StoreLocaterScreen = () => {
                     title="My City"
                     description="My Area"
                 >
-                    <Callout tooltip>
+                    {/* <Callout tooltip>
                         <View>
-
                             <View style={styles.bubble}>
-                                <Text style={styles.name}>Favourite Store</Text>
-                                <Image
+                                <Text>
+                                    <Image
                                     style={styles.image}
                                     source={require('../assests/banners/banner3.jpg')}
                                 />
+                                </Text>
                             </View>
                             <View style={styles.arrowBorder}></View>
                             <View style={styles.arrow}></View>
+                        </View>
+                    </Callout> */}
+                    <Callout>
+                        <View
+                            style={{
+                                width: 200,
+                                height: 200,
+                                // backgroundColor: 'blue'
+                            }}
+                        ><Text>
+                                <Image
+                                    // source={{
+                                    //     uri:
+                                    //         'https://cdn.pixabay.com/photo/2016/06/18/17/42/image-1465348_1280.jpg'
+                                    // }}
+                                    source={require('../assests/banners/banner2.jpg')}
+                                    style={{
+                                        width: 200,
+                                        height: 200,
+                                        backgroundColor: 'red',
+                                        resizeMode: 'contain'
+                                    }}
+                                />
+                            </Text>
                         </View>
                     </Callout>
                 </Marker>

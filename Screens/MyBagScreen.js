@@ -1,15 +1,19 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, FlatList, View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
+import FormButton from '../components/FormButtom';
 import { deleteProduct } from '../src/actions/ProductAction';
 
-const MyBagScreen = () => {
+const MyBagScreen = ({navigation}) => {
     const dispatch = useDispatch();
     const deleteCartProduct = (key) => dispatch(deleteProduct(key));
     const products = useSelector(state => state.product_Reducer.productList);
+    // const navigation = useNavigation();
 
     const renderItem = ({ item }) => (
+        
         <View style={styles.item}>
             <Image
                 source={{
@@ -40,11 +44,22 @@ const MyBagScreen = () => {
                 renderItem={renderItem}
                 keyExtractor={(item, index) => item.key.toString()}
             />
+            <FormButton
+                buttonTitle="Checkout"
+                onPress={() => { navigation.navigate('checkout') }}
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    mainContainer:
+    {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: (Platform.OS === 'ios') ? 20 : 0
+    },
     listContainer: {
         backgroundColor: '#212121',
         padding: 16
@@ -56,6 +71,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     container: {
+        flex:1,
         marginTop: 10,
         padding: 2,
         marginBottom: 10,
